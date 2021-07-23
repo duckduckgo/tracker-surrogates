@@ -1,0 +1,26 @@
+{
+  "name": "tracker-surrogates",
+  "version": "1.0.0",
+  "description": "Surrogates are small scripts that our apps and extensions serve in place of trackers that cause things to break when blocked.",
+  "scripts": {
+    "lint-js": "eslint .",
+    "test-eval": "node ./scripts/test-eval.js",
+    "test-mapping": "node ./scripts/test-mapping.js",
+    "test": "npm run lint-js && npm run test-mapping && npm run test-eval",
+    "build": "node ./scripts/concat.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duckduckgo/tracker-surrogates.git"
+  },
+  "author": "Duck Duck Go, Inc.",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "jsdom": "^16.6.0"
+  }
+}
