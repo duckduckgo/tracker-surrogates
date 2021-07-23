@@ -4,7 +4,7 @@ Surrogates are small scripts that our apps and extensions serve in place of trac
 
 ## How this repository is used
 
-All surrogates are bundled togheter and deployed to a CDN from which they are picked by clients.
+All surrogates are bundled together and deployed to a CDN from which they are picked by clients.
 For platforms that don't allow remote code execution this repository is imported as a git submodule and surrogates are embedded at build time.
 
 DuckDuckGo clients using surrogates:
