@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - uses: ./
     - run: npm run build
     - run: cp builds/surrogates.txt builds/surrogates-next.txt
     - uses: jakejarvis/s3-sync-action@master
