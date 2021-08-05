@@ -11,9 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - run: npm run build
-    - run: cp builds/surrogates.txt builds/surrogates-next.txt
-    - run: ls builds
-    - run: pwd builds/surrogates-next.txt
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks
@@ -21,5 +18,5 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        SOURCE_DIR: 'builds/surrogates-next.txt' 
+        SOURCE_DIR: 'builds/' 
         DEST_DIR: '/'

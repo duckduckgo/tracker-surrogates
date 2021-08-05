@@ -46,7 +46,7 @@ if (!fs.existsSync(buildsDir)) {
     fs.mkdirSync(buildsDir);
 }
 
-fs.writeFileSync(path.join(buildsDir, 'surrogates.txt'), output);
+fs.writeFileSync(path.join(buildsDir, 'surrogates-next.txt'), output);
 
 const hash = crypto.createHash('md5').update(output).digest('hex');
 console.log('MD5 hash: ', hash);
