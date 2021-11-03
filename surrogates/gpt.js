@@ -71,6 +71,7 @@
     };
     const gptObj = {
         _loadStarted_: true,
+        slotmap: [],
         apiReady: true,
         pubadsReady: true,
         cmd: [],
