@@ -1,6 +1,5 @@
 {
-  "name": "tracker-surrogates",
-  "version": "1.0.0",
+  "name": "@duckduckgo/tracker-surrogates",
   "description": "Surrogates are small scripts that our apps and extensions serve in place of trackers that cause things to break when blocked.",
   "scripts": {
     "lint-js": "eslint .",
