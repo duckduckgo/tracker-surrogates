@@ -3,8 +3,8 @@
         { "url": "google-analytics.com/ga.js", "surrogate": "ga.js" },
         { "url": "google-analytics.com/analytics.js", "surrogate": "analytics.js" },
         { "url": "google-analytics.com/inpage_linkid.js", "surrogate": "inpage_linkid.js" },
-        { "url": "google-analytics.com/cx/api.js", "surrogate": "api.js" },
         { "url": "google-analytics.com/plugins/ga/inpage_linkid.js", "surrogate": "inpage_linkid.js" },
+        { "url": "google-analytics.com/cx/api.js", "surrogate": "api.js" },
         { "url": "google-analytics.com/gtm/js", "surrogate": "gtm.js" }
     ],
     "googletagmanager.com": [
@@ -36,9 +36,13 @@
         { "url": "chartbeat.com/js/chartbeat.js", "surrogate": "chartbeat.js" }
     ],
     "facebook.net": [
-        { "regexUrl": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+        { "regexUrl": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
+        { "regexUrl": "facebook\\.net\\/[a-z_A-Z]+\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+    ],
+    "facebook.com": [
+        { "regexUrl": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
     "youtube.com": [
-        { "regexUrl": "(www\\.)?youtube(-nocookie)?\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js" }
+        { "regexUrl": "(www\\.)?youtube(-nocookie)?\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
     ]
 }
