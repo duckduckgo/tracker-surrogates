@@ -1,4 +1,3 @@
-// facebook.net/sdk.js application/javascript
 (() => {
     'use strict';
     const originalFBURL = document.currentScript.src;
