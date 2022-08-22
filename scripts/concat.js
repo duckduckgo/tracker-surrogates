@@ -13,7 +13,7 @@ let output = `# This file contains "surrogates". Surrogates are small scripts th
 
 function findSurrogateDomain (surrogate) {
     const domain = Object.keys(mapping).find(domainKey =>
-        mapping[domainKey].find(([, to]) => (to === surrogate))
+        mapping[domainKey].find((s) => (s.surrogate === surrogate))
     );
 
     if (domain) {
