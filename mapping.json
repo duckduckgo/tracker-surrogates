@@ -1,39 +1,39 @@
 {
     "google-analytics.com": [
-        { "url": "google-analytics.com/ga.js", "surrogate": "ga.js" },
-        { "url": "google-analytics.com/analytics.js", "surrogate": "analytics.js" },
-        { "url": "google-analytics.com/inpage_linkid.js", "surrogate": "inpage_linkid.js" },
-        { "url": "google-analytics.com/plugins/ga/inpage_linkid.js", "surrogate": "inpage_linkid.js" },
-        { "url": "google-analytics.com/cx/api.js", "surrogate": "api.js" },
-        { "url": "google-analytics.com/gtm/js", "surrogate": "gtm.js" }
+        { "regexUrl": "google-analytics\\.com\\/ga\\.js", "surrogate": "ga.js" },
+        { "regexUrl": "google-analytics\\.com\\/analytics\\.js", "surrogate": "analytics.js" },
+        { "regexUrl": "google-analytics\\.com\\/inpage_linkid\\.js", "surrogate": "inpage_linkid.js" },
+        { "regexUrl": "google-analytics\\.com\\/plugins\\/ga\\/inpage_linkid\\.js", "surrogate": "inpage_linkid.js" },
+        { "regexUrl": "google-analytics\\.com\\/cx\\/api\\.js", "surrogate": "api.js" },
+        { "regexUrl": "google-analytics\\.com\\/gtm\\/js", "surrogate": "gtm.js" }
     ],
     "googletagmanager.com": [
-        { "url": "googletagmanager.com/gtm.js", "surrogate": "gtm.js" }
+        { "regexUrl": "googletagmanager\\.com\\/gtm\\.js", "surrogate": "gtm.js" }
     ],
     "googletagservices.com": [
-        { "url": "googletagservices.com/gpt.js", "surrogate": "gpt.js" },
-        { "url": "googletagservices.com/tag/js/gpt.js", "surrogate": "gpt.js" }
+        { "regexUrl": "googletagservices\\.com\\/gpt\\.js", "surrogate": "gpt.js" },
+        { "regexUrl": "googletagservices\\.com\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
     "googlesyndication.com": [
-        { "url": "googlesyndication.com/adsbygoogle.js", "surrogate": "adsbygoogle.js" },
-        { "url": "googlesyndication.com/pagead/js/adsbygoogle.js", "surrogate": "adsbygoogle.js" }
+        { "regexUrl": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
+        { "regexUrl": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
     ],
     "doubleclick.net": [
-        { "url": "doubleclick.net/instream/ad_status.js", "surrogate": "ad_status.js" },
-        { "url": "doubleclick.net/tag/js/gpt.js", "surrogate": "gpt.js" }
+        { "regexUrl": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
+        { "regexUrl": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
     "scorecardresearch.com": [
-        { "url": "scorecardresearch.com/beacon.js", "surrogate": "beacon.js" }
+        { "regexUrl": "scorecardresearch\\.com\\/beacon\\.js", "surrogate": "beacon.js" }
     ],
     "outbrain.com": [
-        { "url": "outbrain.com/outbrain.js", "surrogate": "outbrain.js" }
+        { "regexUrl": "outbrain\\.com\\/outbrain\\.js", "surrogate": "outbrain.js" }
     ],
     "amazon-adsystem.com": [
-        { "url": "amazon-adsystem.com/aax2/amzn_ads.js", "surrogate": "amzn_ads.js" }
+        { "regexUrl": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js", "surrogate": "amzn_ads.js" }
     ],
     "chartbeat.com": [
-        { "url": "chartbeat.com/chartbeat.js", "surrogate": "chartbeat.js" },
-        { "url": "chartbeat.com/js/chartbeat.js", "surrogate": "chartbeat.js" }
+        { "regexUrl": "chartbeat\\.com\\/chartbeat\\.js", "surrogate": "chartbeat.js" },
+        { "regexUrl": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
     ],
     "facebook.net": [
         { "regexUrl": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
@@ -43,6 +43,6 @@
         { "regexUrl": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
     "youtube.com": [
-        { "regexUrl": "(www\\.)?youtube(-nocookie)?\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
+        { "regexUrl": "youtube(-nocookie)?\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
     ]
 }
