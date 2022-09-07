@@ -1,28 +1,29 @@
+// facebook.net/sdk.js application/javascript
 (() => {
-    'use strict';
-    const originalFBURL = document.currentScript.src;
-    let siteInit = function () {};
-    let fbIsEnabled = false;
-    let initData = {};
-    let runInit = false;
-    const parseCalls = [];
-    const popupName = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12);
+    'use strict'
+    const originalFBURL = document.currentScript.src
+    let siteInit = function () {}
+    let fbIsEnabled = false
+    let initData = {}
+    let runInit = false
+    const parseCalls = []
+    const popupName = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 12)
 
     const fbLogin = {
         callback: function () {},
         params: undefined,
         shouldRun: false
-    };
+    }
 
     function messageAddon (detailObject) {
-        detailObject.entity = 'Facebook';
+        detailObject.entity = 'Facebook'
         const event = new CustomEvent('ddg-ctp', {
             detail: detailObject,
             bubbles: false,
             cancelable: false,
             composed: false
-        });
-        dispatchEvent(event);
+        })
+        dispatchEvent(event)
     }
 
     /**
@@ -40,113 +41,118 @@
      */
     function enableFacebookSDK () {
         if (!fbIsEnabled) {
-            window.FB = undefined;
+            window.FB = undefined
 
             window.fbAsyncInit = function () {
                 if (runInit && initData) {
-                    window.FB.init(initData);
+                    window.FB.init(initData)
                 }
-                siteInit();
+                siteInit()
                 if (fbLogin.shouldRun) {
-                    window.FB.login(fbLogin.callback, fbLogin.params);
+                    window.FB.login(fbLogin.callback, fbLogin.params)
                 }
-            };
+            }
 
-            const fbScript = document.createElement('script');
-            fbScript.setAttribute('crossorigin', 'anonymous');
-            fbScript.setAttribute('async', '');
-            fbScript.setAttribute('defer', '');
-            fbScript.src = originalFBURL;
+            const fbScript = document.createElement('script')
+            fbScript.setAttribute('crossorigin', 'anonymous')
+            fbScript.setAttribute('async', '')
+            fbScript.setAttribute('defer', '')
+            fbScript.src = originalFBURL
             fbScript.onload = function () {
                 for (const node of parseCalls) {
-                    window.FB.XFBML.parse.apply(window.FB.XFBML, node);
+                    window.FB.XFBML.parse.apply(window.FB.XFBML, node)
                 }
-            };
-            document.head.appendChild(fbScript);
-            fbIsEnabled = true;
+            }
+            document.head.appendChild(fbScript)
+            fbIsEnabled = true
         } else {
             if (initData) {
-                window.FB.init(initData);
+                window.FB.init(initData)
             }
         }
     }
 
     function runFacebookLogin () {
-        fbLogin.shouldRun = true;
-        replaceWindowOpen();
-        loginPopup();
-        enableFacebookSDK();
+        fbLogin.shouldRun = true
+        replaceWindowOpen()
+        loginPopup()
+        enableFacebookSDK()
     }
 
     function replaceWindowOpen () {
-        const oldOpen = window.open;
+        const oldOpen = window.open
         window.open = function (url, name, windowParams) {
-            const u = new URL(url);
+            const u = new URL(url)
             if (u.origin === 'https://www.facebook.com') {
-                name = popupName;
+                name = popupName
             }
-            return oldOpen.call(window, url, name, windowParams);
-        };
+            return oldOpen.call(window, url, name, windowParams)
+        }
     }
 
     function loginPopup () {
-        const width = Math.min(window.screen.width, 450);
-        const height = Math.min(window.screen.height, 450);
-        const popupParams = `width=${width},height=${height},scrollbars=1,location=1`;
-        window.open('about:blank', popupName, popupParams);
+        const width = Math.min(window.screen.width, 450)
+        const height = Math.min(window.screen.height, 450)
+        const popupParams = `width=${width},height=${height},scrollbars=1,location=1`
+        window.open('about:blank', popupName, popupParams)
     }
 
     window.addEventListener('ddg-ctp-load-sdk', event => {
         if (event.detail.entity === 'Facebook') {
-            enableFacebookSDK();
+            enableFacebookSDK()
         }
-    });
+    })
     window.addEventListener('ddg-ctp-run-login', event => {
         if (event.detail.entity === 'Facebook') {
-            runFacebookLogin();
+            runFacebookLogin()
         }
-    });
+    })
+    window.addEventListener('ddg-ctp-cancel-modal', event => {
+        if (event.detail.entity === 'Facebook') {
+            fbLogin.callback({ })
+        }
+    })
 
     function init () {
         if (window.fbAsyncInit) {
-            siteInit = window.fbAsyncInit;
-            window.fbAsyncInit();
+            siteInit = window.fbAsyncInit
+            window.fbAsyncInit()
         }
     }
 
     if (!window.FB) {
         window.FB = {
-            api: function (url, cb) { cb(); },
+            api: function (url, cb) { cb() },
             init: function (obj) {
                 if (obj) {
-                    initData = obj;
-                    runInit = true;
+                    initData = obj
+                    runInit = true
                     messageAddon({
                         appID: obj.appId
-                    });
+                    })
                 }
             },
             ui: function (obj, cb) {
                 if (obj.method && obj.method === 'share') {
-                    const shareLink = 'https://www.facebook.com/sharer/sharer.php?u=' + obj.href;
-                    window.open(shareLink, 'share-facebook', 'width=550,height=235');
+                    const shareLink = 'https://www.facebook.com/sharer/sharer.php?u=' + obj.href
+                    window.open(shareLink, 'share-facebook', 'width=550,height=235')
                 }
-                // eslint-disable-next-line node/no-callback-literal
-                cb({});
+                // eslint-disable-next-line n/no-callback-literal
+                cb({})
             },
             getAccessToken: function () {},
             getAuthResponse: function () {
-                return { status: '' };
+                return { status: '' }
             },
-            // eslint-disable-next-line node/no-callback-literal
-            getLoginStatus: function (callback) { callback({ status: 'unknown' }); },
+            // eslint-disable-next-line n/no-callback-literal
+            getLoginStatus: function (callback) { callback({ status: 'unknown' }) },
             getUserID: function () {},
             login: function (cb, params) {
-                fbLogin.callback = cb;
-                fbLogin.params = params;
+                fbLogin.callback = cb
+                fbLogin.params = params
                 messageAddon({
                     action: 'login'
-                });
+                })
             },
             logout: function () {},
             AppEvents: {
@@ -154,30 +160,27 @@
                 logEvent: function (a, b, c) {},
                 logPageView: function () {}
             },
-            CheckboxPlugin: {
-                confirm: function () {}
-            },
             Event: {
                 subscribe: function (event, callback) {
                     if (event === 'xfbml.render') {
-                        callback();
+                        callback()
                     }
                 },
                 unsubscribe: function () {}
             },
             XFBML: {
                 parse: function (n) {
-                    parseCalls.push(n);
+                    parseCalls.push(n)
                 }
             }
-        };
+        }
         if (document.readyState === 'complete') {
-            init();
+            init()
         } else {
             // sdk script loaded before page content, so wait for load.
             window.addEventListener('load', (event) => {
-                init();
-            });
+                init()
+            })
         }
     }
-})();
+})()
