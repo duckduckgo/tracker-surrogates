@@ -1,48 +1,47 @@
 {
     "google-analytics.com": [
-        { "regexUrl": "google-analytics\\.com\\/ga\\.js", "surrogate": "ga.js" },
-        { "regexUrl": "google-analytics\\.com\\/analytics\\.js", "surrogate": "analytics.js" },
-        { "regexUrl": "google-analytics\\.com\\/inpage_linkid\\.js", "surrogate": "inpage_linkid.js" },
-        { "regexUrl": "google-analytics\\.com\\/plugins\\/ga\\/inpage_linkid\\.js", "surrogate": "inpage_linkid.js" },
-        { "regexUrl": "google-analytics\\.com\\/cx\\/api\\.js", "surrogate": "api.js" },
-        { "regexUrl": "google-analytics\\.com\\/gtm\\/js", "surrogate": "gtm.js" }
+        { "regexRule": "google-analytics\\.com\\/ga\\.js", "surrogate": "ga.js" },
+        { "regexRule": "google-analytics\\.com\\/analytics\\.js", "surrogate": "analytics.js" },
+        { "regexRule": "google-analytics\\.com\\/inpage_linkid\\.js", "surrogate": "inpage_linkid.js" },
+        { "regexRule": "google-analytics\\.com\\/plugins\\/ga\\/inpage_linkid\\.js", "surrogate": "inpage_linkid.js" },
+        { "regexRule": "google-analytics\\.com\\/cx\\/api\\.js", "surrogate": "api.js" },
+        { "regexRule": "google-analytics\\.com\\/gtm\\/js", "surrogate": "gtm.js" }
     ],
     "googletagmanager.com": [
-        { "regexUrl": "googletagmanager\\.com\\/gtm\\.js", "surrogate": "gtm.js" }
+        { "regexRule": "googletagmanager\\.com\\/gtm\\.js", "surrogate": "gtm.js" }
     ],
     "googletagservices.com": [
-        { "regexUrl": "googletagservices\\.com\\/gpt\\.js", "surrogate": "gpt.js" },
-        { "regexUrl": "googletagservices\\.com\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
+        { "regexRule": "\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
     "googlesyndication.com": [
-        { "regexUrl": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
-        { "regexUrl": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
+        { "regexRule": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
+        { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
     ],
     "doubleclick.net": [
-        { "regexUrl": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
-        { "regexUrl": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
+        { "regexRule": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
+        { "regexRule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
     "scorecardresearch.com": [
-        { "regexUrl": "scorecardresearch\\.com\\/beacon\\.js", "surrogate": "beacon.js" }
+        { "regexRule": "scorecardresearch\\.com\\/beacon\\.js", "surrogate": "beacon.js" }
     ],
     "outbrain.com": [
-        { "regexUrl": "outbrain\\.com\\/outbrain\\.js", "surrogate": "outbrain.js" }
+        { "regexRule": "outbrain\\.com\\/outbrain\\.js", "surrogate": "outbrain.js" }
     ],
     "amazon-adsystem.com": [
-        { "regexUrl": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js", "surrogate": "amzn_ads.js" }
+        { "regexRule": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js", "surrogate": "amzn_ads.js" }
     ],
     "chartbeat.com": [
-        { "regexUrl": "chartbeat\\.com\\/chartbeat\\.js", "surrogate": "chartbeat.js" },
-        { "regexUrl": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
+        { "regexRule": "chartbeat\\.com\\/chartbeat\\.js", "surrogate": "chartbeat.js" },
+        { "regexRule": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
     ],
     "facebook.net": [
-        { "regexUrl": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
-        { "regexUrl": "facebook\\.net\\/[a-z_A-Z]+\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+        { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
+        { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
     "facebook.com": [
-        { "regexUrl": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+        { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
     "youtube.com": [
-        { "regexUrl": "youtube(-nocookie)?\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
+        { "regexRule": "youtube(-nocookie)?\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
     ]
 }
