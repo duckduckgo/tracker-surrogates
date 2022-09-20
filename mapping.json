@@ -11,7 +11,8 @@
         { "regexRule": "googletagmanager\\.com\\/gtm\\.js", "surrogate": "gtm.js" }
     ],
     "googletagservices.com": [
-        { "regexRule": "\\/gpt\\.js", "surrogate": "gpt.js" }
+        { "regexRule": "googletagservices\\.com\\/gpt\\.js", "surrogate": "gpt.js" },
+        { "regexRule": "googletagservices\\.com\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
     "googlesyndication.com": [
         { "regexRule": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
