@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const mapping = require('../mapping.json');
 const surrogatesDir = path.join(__dirname, '../surrogates');
-const URL = require('url').URL;
 
 const knownSurrogates = [];
 
@@ -22,23 +21,19 @@ const seen = new Set();
 
 Object.keys(mapping).forEach(domainKey => {
     const surrogateMappings = mapping[domainKey];
-
-    surrogateMappings.forEach(([from, to]) => {
-        if (!from.startsWith(domainKey)) {
-            console.error(`🛑 Rule doesn't match domain - "${from}" doesn't match "${domainKey}"`);
-            process.exit(1);
-        }
-
-        try {
-            // eslint-disable-next-line no-new
-            new URL(`https://${from}`);
-        } catch (e) {
-            console.error(`🛑 Rule is not a valid URL - "${from}"`);
-            process.exit(1);
-        }
+    Object.keys(surrogateMappings).forEach((s) => {
+        const surr = surrogateMappings[s];
+        const to = surr.surrogate;
 
         if (!knownSurrogates.includes(to)) {
             console.error(`🛑 Mapping file contains unknown surrogate - ${to}`);
+            process.exit(1);
+        }
+
+        // build RE based upon domain portion of regex
+        const re = new RegExp(surr.regexRule.split('\\/')[0]);
+        if (!re.test(domainKey)) {
+            console.error(`🛑 RegExp rule doesn't match domain - "${surr.regexRule}" doesn't match "${domainKey}"`);
             process.exit(1);
         }
 

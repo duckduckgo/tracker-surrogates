@@ -13,7 +13,7 @@ let output = `# This file contains "surrogates". Surrogates are small scripts th
 
 function findSurrogateDomain (surrogate) {
     const domain = Object.keys(mapping).find(domainKey =>
-        mapping[domainKey].find(([, to]) => (to === surrogate))
+        mapping[domainKey].find((s) => (s.surrogate === surrogate))
     );
 
     if (domain) {
@@ -28,7 +28,8 @@ fs.readdirSync(surrogatesDir).forEach(filename => {
     const stat = fs.statSync(filepath);
 
     if (stat.isFile()) {
-        const surrogateText = fs.readFileSync(filepath, 'utf-8');
+        // strip blank lines from surrogates, or it breaks parsing in BSK
+        const surrogateText = fs.readFileSync(filepath, 'utf-8').replace(/^\s*[\r\n]/gm, '');
         const surrogateDomain = findSurrogateDomain(filename);
 
         if (!surrogateDomain) {
