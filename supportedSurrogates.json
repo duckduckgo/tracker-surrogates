@@ -1,0 +1,16 @@
+[
+    "ad_status.js",
+    "adsbygoogle.js",
+    "amzn_ads.js",
+    "analytics.js",
+    "api.js",
+    "beacon.js",
+    "chartbeat.js",
+    "fb-sdk.js",
+    "ga.js",
+    "gpt.js",
+    "gtm.js",
+    "inpage_linkid.js",
+    "outbrain.js",
+    "youtube-iframe-api.js"
+]

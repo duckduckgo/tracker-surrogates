@@ -17,7 +17,8 @@ DuckDuckGo clients using surrogates:
 
 - `scripts/` - testing and deployment scripts
 - `surrogates/` - surrogate files
-- `mapping.json` - file that contains url match rules for which surrogates should be served
+- `supportedSurrogates.json` - file that contains a list of the currently supported surrogate scripts, for use by apps and extensions.
+- `mapping.json` - file that contains url match rules for which surrogates should be served, only for use when generating the block list.
 
 Format of the `mapping.json` file:
 
