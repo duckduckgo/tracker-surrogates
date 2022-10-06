@@ -4,7 +4,7 @@ Surrogates are small scripts that our apps and extensions serve in place of trac
 
 ## How this repository is used
 
-All surrogates are bundled together and deployed to a CDN from which they are picked by clients.
+All surrogates are bundled together and [deployed to a CDN](https://duckduckgo.com/contentblocking.js?l=surrogates) from which they are picked by client apps and extensions.
 For platforms that don't allow remote code execution this repository is imported as a git submodule and surrogates are embedded at build time.
 
 DuckDuckGo clients using surrogates:
@@ -17,21 +17,23 @@ DuckDuckGo clients using surrogates:
 
 - `scripts/` - testing and deployment scripts
 - `surrogates/` - surrogate files
-- `mapping.json` - file that contains url match rules for which surrogates should be served
+- `mapping.json` - list of regular expressions that map urls to surrogates that should be served as request responses. Data from this file is incorporated into the [web blocklist](https://github.com/duckduckgo/tracker-blocklists/tree/main/web).
 
 Format of the `mapping.json` file:
 
-```json
+```js
 {
     "example.com": [
-        ["example.com/rule/matching/file.js", "surrogate_name.js"],
+        {
+            "regexRule": "example.com\\/rule\\/matching\\/[a-z_A-Z]+\\/file.js", // regular expression for matching urls
+            "surrogate": "surrogate_name.js", // name of the file from the `surrogates/` folder
+            "action": "block-ctl-example" // optional action name, used by the blocklist, indicating that this surrogate is meant for the Click To Load feature
+        },
         …
     ],
     …
 }
 ```
-
-`surrogate_name.js` should match name of the file from the `surrogates` folder.
 
 ## Contributing
 
