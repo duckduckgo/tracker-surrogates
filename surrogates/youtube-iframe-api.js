@@ -5,7 +5,7 @@
         return;
     }
 
-    const googleEntityName = 'Google LLC';
+    const youtubeEntityName = 'Youtube';
 
     // See https://developers.google.com/youtube/iframe_api_reference
     const iframeAPIURL = 'https://www.youtube.com/iframe_api';
@@ -193,7 +193,7 @@
                 replaceSettings: { type: replaceType }
             }
         }) => {
-            if (entity !== googleEntityName || replaceType !== 'youtube-video') {
+            if (entity !== youtubeEntityName || replaceType !== 'youtube-video') {
                 return;
             }
 
@@ -217,7 +217,7 @@
             replaceSettings: { type: replaceType }
         }
     }) {
-        if (entity !== googleEntityName || replaceType !== 'youtube-video') {
+        if (entity !== youtubeEntityName || replaceType !== 'youtube-video') {
             return;
         }
 
