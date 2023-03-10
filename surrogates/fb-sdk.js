@@ -1,5 +1,6 @@
 (() => {
     'use strict';
+    const facebookEntity = 'Facebook, Inc.';
     const originalFBURL = document.currentScript.src;
     let siteInit = function () {};
     let fbIsEnabled = false;
@@ -15,7 +16,7 @@
     };
 
     function messageAddon (detailObject) {
-        detailObject.entity = 'Facebook';
+        detailObject.entity = facebookEntity;
         const event = new CustomEvent('ddg-ctp', {
             detail: detailObject,
             bubbles: false,
@@ -97,17 +98,17 @@
     }
 
     window.addEventListener('ddg-ctp-load-sdk', event => {
-        if (event.detail.entity === 'Facebook') {
+        if (event.detail.entity === facebookEntity) {
             enableFacebookSDK();
         }
     });
     window.addEventListener('ddg-ctp-run-login', event => {
-        if (event.detail.entity === 'Facebook') {
+        if (event.detail.entity === facebookEntity) {
             runFacebookLogin();
         }
     });
     window.addEventListener('ddg-ctp-cancel-modal', event => {
-        if (event.detail.entity === 'Facebook') {
+        if (event.detail.entity === facebookEntity) {
             fbLogin.callback({ });
         }
     });
