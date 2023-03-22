@@ -6,6 +6,8 @@
     "rules": {
         "indent": ["error", 4],
         "semi": ["error", "always"],
-        "node/no-callback-literal": "off"
+        "node/no-callback-literal": "off",
+        "generator-star-spacing": ["error", {"before": false, "after": true}],
+        "yield-star-spacing": ["error", {"before": false, "after": true}]
     }
 }

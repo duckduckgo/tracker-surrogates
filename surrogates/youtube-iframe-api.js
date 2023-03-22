@@ -31,8 +31,13 @@
     // Mappings between the "real" video elements and their placeholder
     // elements.
     const videoElementsByID = new Map();
-    const videoElementByPlaceholderElement = new WeakMap();
-    const placeholderElementByVideoElement = new WeakMap();
+    const videoElementByPlaceholderElement = new Map();
+    const placeholderElementByVideoElement = new Map();
+
+    function* allVideoElements () {
+        yield* videoElementByPlaceholderElement.values();
+        yield* videoElementsByID.values();
+    }
 
     /**
      * Mock of the `YT.Player` constructor.
@@ -45,7 +50,18 @@
         const { height, width, videoId, playerVars = { }, events } = config;
 
         if (!(target instanceof Element)) {
-            target = document.getElementById(target);
+            const orignalTarget = target;
+            target = document.getElementById(orignalTarget);
+
+            if (!target) {
+                for (const videoElement of allVideoElements()) {
+                    // eslint-disable-next-line eqeqeq
+                    if (videoElement.id == orignalTarget) {
+                        target = videoElement;
+                        break;
+                    }
+                }
+            }
         }
 
         // Normalise target to always be the video element instead of the
