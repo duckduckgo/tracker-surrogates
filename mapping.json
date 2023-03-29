@@ -36,7 +36,7 @@
         { "regexRule": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
     ],
     "facebook.net": [
-         { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
+        { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
         { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
         { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
