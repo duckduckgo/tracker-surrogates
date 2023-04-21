@@ -183,4 +183,6 @@
             });
         }
     }
+
+    window.dispatchEvent(new CustomEvent('ddg-ctp-surrogate-load'));
 })();
