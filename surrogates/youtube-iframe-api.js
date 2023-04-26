@@ -27,6 +27,7 @@
     const mockPlayerByVideoElement = new WeakMap();
     const onReadyListenerByVideoElement = new WeakMap();
     const onStateChangeListenerByVideoElement = new WeakMap();
+    const otherEventListenersByVideoElement = new WeakMap();
 
     // Mappings between the "real" video elements and their placeholder
     // elements.
@@ -40,6 +41,56 @@
     }
 
     /**
+     * Workaround for websites that use the YouTube Iframe API to set the video
+     * ID _after_ the onReady event fires for the video player.
+     * Note: This is not ideal, but most websites do not use the YouTube Iframe
+     *       API in this way. In the future, this code-path could be expanded
+     *       upon if necessary (e.g. to handle similar load functions and
+     *       events).
+     */
+    function handleDeferredVideoLoad (target, url, onReady) {
+        const loadEventListeners = [];
+
+        this.getIframe = () => target;
+        this.loadVideoById = videoId => {
+            url.pathname = '/embed/' + encodeURIComponent(videoId);
+            target.src = url.href;
+            for (const listener of loadEventListeners) {
+                listener();
+            }
+        };
+        this.loadVideoByUrl = videoUrl => {
+            url.pathname = new URL(videoUrl).pathname;
+            target.src = url.href;
+            for (const listener of loadEventListeners) {
+                listener();
+            }
+        };
+        this.addEventListener = (eventName, listener) => {
+            // Note all of the event listeners, so that they can be added for
+            // real if the video is loaded in the future.
+            if (!otherEventListenersByVideoElement.has(target)) {
+                otherEventListenersByVideoElement.set(target, []);
+            }
+            otherEventListenersByVideoElement.get(target).push([eventName, listener]);
+
+            // Separately keep track of any "on load" event listeners so that
+            // they can be triggered early.
+            switch (eventName) {
+            case 'onAutoplayBlocked':
+                loadEventListeners.push(listener);
+                break;
+            case 'onStateChange':
+                loadEventListeners.push(
+                    listener.bind(null, window.YT.PlayerState.CUED)
+                );
+                break;
+            }
+        };
+        onReady({ target: this });
+    }
+
+    /**
      * Mock of the `YT.Player` constructor.
      */
     function Player (target, config = { }, ...rest) {
@@ -47,7 +98,7 @@
             return new RealYTPlayer(target, config, ...rest);
         }
 
-        const { height, width, videoId, playerVars = { }, events } = config;
+        let { height, width, videoId, playerVars = { }, events } = config;
 
         if (!(target instanceof Element)) {
             const orignalTarget = target;
@@ -74,43 +125,85 @@
             throw new Error('Target not found');
         }
 
+        const url = new URL(window.YTConfig.host);
+        url.pathname = '/embed/';
+
+        // Some websites have an iframe ready, with some of the video
+        // parameters set. Take care to check for those.
+        if (target instanceof HTMLIFrameElement) {
+            let existingUrl;
+            try { existingUrl = new URL(target.src); } catch (e) {}
+            if (existingUrl?.hostname === 'youtube.com' ||
+                existingUrl?.hostname === 'youtube-nocookie.com' ||
+                existingUrl?.hostname === 'www.youtube.com' ||
+                existingUrl?.hostname === 'www.youtube-nocookie.com') {
+                // Existing iframe URL has a video ID, use that if one
+                // wasn't passed in the config.
+                if (existingUrl.pathname.startsWith('/embed/')) {
+                    videoId = videoId || existingUrl.pathname.substr(7);
+                }
+
+                // Make use of any setting parameters too, though note they
+                // can be overwritten by parameters given in the config.
+                for (const [key, value] of existingUrl.searchParams) {
+                    url.searchParams.set(key, value);
+                }
+            }
+        }
+
         // Set up the video element if the target isn't an existing video.
         if (!placeholderElementByVideoElement.has(target)) {
-            const url = new URL(window.YTConfig.host);
-            url.pathname = '/embed/';
-
             // For videos (not playlists) append the video ID to the path.
             // See https://developers.google.com/youtube/player_parameters
-            if (!playerVars.list) {
+            if (!playerVars.list && videoId) {
                 url.pathname += encodeURIComponent(videoId);
             }
 
+            // Check for the setting parameters included in playerVars.
             for (const [key, value] of Object.entries(playerVars)) {
                 url.searchParams.set(key, value);
             }
 
-            // Ensure that JavaScript control of the video is enabled. This is
-            // necessary for the onReady event to fire for the video.
+            // Ensure that JavaScript control of the video is always enabled.
+            // This is necessary for the onReady event to fire for the video.
             url.searchParams.set('enablejsapi', '1');
 
-            const videoIframe = document.createElement('iframe');
-            videoIframe.height = parseInt(height, 10) || defaultHeight;
-            videoIframe.width = parseInt(width, 10) || defaultWidth;
-            videoIframe.src = url.href;
+            if (target instanceof HTMLIFrameElement) {
+                target.src = url.href;
+            } else {
+                const videoIframe = document.createElement('iframe');
+                videoIframe.height = parseInt(height, 10) || defaultHeight;
+                videoIframe.width = parseInt(width, 10) || defaultWidth;
+                videoIframe.src = url.href;
 
-            if (target.id) {
-                videoIframe.id = target.id;
+                if (target.id) {
+                    videoIframe.id = target.id;
+                }
+
+                target.replaceWith(videoIframe);
+                target = videoIframe;
             }
-
-            target.replaceWith(videoIframe);
-            target = videoIframe;
 
             target.dispatchEvent(new CustomEvent('ddg-ctp-replace-element'));
         }
 
         if (events) {
             if (events.onReady) {
-                onReadyListenerByVideoElement.set(target, events.onReady);
+                if (!playerVars.list && !videoId) {
+                    // A few websites only set the video ID _after_ the onReady
+                    // event has fired. That way of using the API doesn't make
+                    // much sense, but it's still worth handling.
+                    window.setTimeout(
+                        handleDeferredVideoLoad.bind(
+                            this, target, url, events.onReady
+                        ), 0
+                    );
+                } else {
+                    // Usually though, when there is an onReady event listener,
+                    // that should be kept and only fired once the video is
+                    // really loading.
+                    onReadyListenerByVideoElement.set(target, events.onReady);
+                }
             }
             if (events.onStateChange) {
                 onStateChangeListenerByVideoElement.set(target, events.onStateChange);
@@ -246,6 +339,7 @@
 
         const onReadyListener = onReadyListenerByVideoElement.get(target);
         const onStateChangeListener = onStateChangeListenerByVideoElement.get(target);
+        const otherEventListeners = otherEventListenersByVideoElement.get(target);
 
         const config = { events: { } };
         if (onStateChangeListener) {
@@ -299,6 +393,14 @@
             if (onReadyListener) {
                 onReadyListener(...args);
             }
+
+            if (otherEventListeners) {
+                // Take care to add event listeners captured by
+                // handleDeferredVideoLoad now that the video has really loaded.
+                for (const [eventName, eventListener] of otherEventListeners) {
+                    realPlayer.addEventListener(eventName, eventListener);
+                }
+            }
         };
 
         realPlayer = new RealYTPlayer(target, config);
@@ -323,4 +425,6 @@
         'ddg-ctp-placeholder-clicked', onPlaceholderClicked,
         { capture: true }
     );
+
+    window.dispatchEvent(new CustomEvent('ddg-ctp-surrogate-load'));
 })();
