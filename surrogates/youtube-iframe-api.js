@@ -15,8 +15,9 @@
     // The website's `onYouTubeIframeAPIReady` listener (if any).
     let realOnYouTubeIframeAPIReady;
 
-    // Reference to the "real" `YT.Player` constructor.
+    // Reference to the "real" `YT.Player` constructor and `YT.get` method.
     let RealYTPlayer = null;
+    let RealYTGet = null;
 
     // Loading state of the YouTube Iframe API.
     let youTubeIframeAPILoaded = false;
@@ -48,46 +49,110 @@
      *       upon if necessary (e.g. to handle similar load functions and
      *       events).
      */
-    function handleDeferredVideoLoad (target, url, onReady) {
-        const loadEventListeners = [];
+    function handleDeferredVideoLoad (target, url, eventListeners) {
+        const fakeVideoLoad = () => {
+            const listeners = otherEventListenersByVideoElement.get(target) || [];
+
+            for (const [eventName, listener] of listeners) {
+                switch (eventName) {
+                case 'onAutoplayBlocked':
+                    listener({ target: this });
+                    break;
+                case 'onStateChange':
+                    listener({ target: this, data: window.YT.PlayerState.PAUSED });
+                    break;
+                }
+            }
+        };
+        const fakeStateChange = state => {
+            const listeners = otherEventListenersByVideoElement.get(target) || [];
+
+            for (const [eventName, listener] of listeners) {
+                if (eventName === 'onStateChange') {
+                    listener({ target: this, data: state });
+                    break;
+                }
+            }
+        };
 
         this.getIframe = () => target;
         this.loadVideoById = videoId => {
             url.pathname = '/embed/' + encodeURIComponent(videoId);
             target.src = url.href;
-            for (const listener of loadEventListeners) {
-                listener();
-            }
+            fakeVideoLoad();
         };
         this.loadVideoByUrl = videoUrl => {
             url.pathname = new URL(videoUrl).pathname;
             target.src = url.href;
-            for (const listener of loadEventListeners) {
-                listener();
-            }
+            fakeVideoLoad();
         };
         this.addEventListener = (eventName, listener) => {
-            // Note all of the event listeners, so that they can be added for
-            // real if the video is loaded in the future.
+            // For some reason, the YouTube addEventListener API also accepts a
+            // string containing the listening function's name.
+            if (typeof listener !== 'function') {
+                listener = window[listener.toString()];
+            }
+
+            // Give up if the listening function can't be found.
+            if (typeof listener !== 'function') {
+                return;
+            }
+
+            // Note the event listener. Used to fake state/load events and also
+            // added to the real video if loaded.
             if (!otherEventListenersByVideoElement.has(target)) {
                 otherEventListenersByVideoElement.set(target, []);
             }
             otherEventListenersByVideoElement.get(target).push([eventName, listener]);
-
-            // Separately keep track of any "on load" event listeners so that
-            // they can be triggered early.
-            switch (eventName) {
-            case 'onAutoplayBlocked':
-                loadEventListeners.push(listener);
-                break;
-            case 'onStateChange':
-                loadEventListeners.push(
-                    listener.bind(null, window.YT.PlayerState.CUED)
-                );
-                break;
-            }
         };
-        onReady({ target: this });
+
+        // Take note of events passed in to via Player constructor's config too.
+        // Note: The onReady event is skipped, since that is faked shortly, and
+        //       it shouldn't fire twice.
+        for (const eventName of Object.keys(eventListeners)) {
+            if (eventName === 'onReady') {
+                continue;
+            }
+
+            this.addEventListener(eventName, eventListeners[eventName]);
+        }
+
+        // Stub out some video methods here, to avoid an exception being thrown
+        // if they are called before the video really loads. For the
+        // play/pause/stop methods, also fire the state change event (if any),
+        // to avoid websites waiting forever for the state to change.
+        this.playVideo = fakeStateChange.bind(this, window.YT.PlayerState.PLAYING);
+        this.pauseVideo = fakeStateChange.bind(this, window.YT.PlayerState.PAUSED);
+        this.stopVideo = fakeStateChange.bind(this, window.YT.PlayerState.ENDED);
+        this.getCurrentTime = () => 0;
+        this.getDuration = () => 0;
+        this.removeEventListener = () => { };
+
+        eventListeners.onReady({ target: this });
+    }
+
+    /**
+     * Mock of the `YT.get` method.
+     */
+    function fakeYTGet (id) {
+        // Use the real YT.get if available.
+        // Note: Mock players won't be returned, so it might not work.
+        if (RealYTGet) {
+            const player = RealYTGet(id);
+            if (player) {
+                return player;
+            }
+        }
+
+        // Now check for mock players.
+        for (const videoElement of allVideoElements()) {
+            const player = mockPlayerByVideoElement.get(videoElement);
+            if (player) {
+                return player;
+            }
+        }
+
+        return undefined;
     }
 
     /**
@@ -195,7 +260,7 @@
                     // much sense, but it's still worth handling.
                     window.setTimeout(
                         handleDeferredVideoLoad.bind(
-                            this, target, url, events.onReady
+                            this, target, url, events
                         ), 0
                     );
                 } else {
@@ -236,7 +301,7 @@
                 window.YTConfig[key] = config[key];
             }
         },
-        get () { },
+        get: fakeYTGet,
         ready () { },
         scan () { },
         subscribe () { },
@@ -263,6 +328,8 @@
         }).then(() => {
             window.onYouTubeIframeAPIReady = realOnYouTubeIframeAPIReady;
             RealYTPlayer = window.YT.Player;
+            RealYTGet = window.YT.get;
+            window.YT.get = fakeYTGet;
             youTubeIframeAPILoaded = true;
             youTubeIframeAPILoadingPromise = null;
         });
@@ -342,7 +409,7 @@
         const otherEventListeners = otherEventListenersByVideoElement.get(target);
 
         const config = { events: { } };
-        if (onStateChangeListener) {
+        if (onStateChangeListener && !otherEventListeners) {
             config.events.onStateChange = onStateChangeListener;
         }
 
@@ -396,9 +463,31 @@
 
             if (otherEventListeners) {
                 // Take care to add event listeners captured by
-                // handleDeferredVideoLoad now that the video has really loaded.
+                // handleDeferredVideoLoad now that the video is really loading.
                 for (const [eventName, eventListener] of otherEventListeners) {
-                    realPlayer.addEventListener(eventName, eventListener);
+                    if (eventName === 'onStateChange') {
+                        // Some state change events (e.g. UNSTARTED, BUFFERING)
+                        // fire when the video is first loaded. Some websites
+                        // are confused when those fire, since a faked PLAYING
+                        // state event might have already been received.
+                        // Avoid dispatching those events until the video has
+                        // really loaded.
+                        let loading = true;
+                        realPlayer.addEventListener(eventName, ({ target, data }) => {
+                            if (loading) {
+                                if (data === window.YT.PlayerState.PLAYING ||
+                                    data === window.YT.PlayerState.ENDED) {
+                                    loading = false;
+                                } else {
+                                    return;
+                                }
+                            }
+
+                            eventListener({ target, data });
+                        });
+                    } else {
+                        realPlayer.addEventListener(eventName, eventListener);
+                    }
                 }
             }
         };
