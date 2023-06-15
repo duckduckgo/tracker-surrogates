@@ -43,9 +43,11 @@
         { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
     "youtube.com": [
-        { "regexRule": "youtube\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
+        { "regexRule": "youtube\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" },
+        { "regexRule": "youtube\\.com\\/player_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
     ],
     "youtube-nocookie.com": [
-        { "regexRule": "youtube-nocookie\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
+        { "regexRule": "youtube-nocookie\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" },
+        { "regexRule": "youtube-nocookie\\.com\\/player_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
     ]
 }
