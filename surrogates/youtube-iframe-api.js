@@ -237,8 +237,8 @@
                 target.src = url.href;
             } else {
                 const videoIframe = document.createElement('iframe');
-                videoIframe.height = parseInt(height, 10) || defaultHeight;
-                videoIframe.width = parseInt(width, 10) || defaultWidth;
+                videoIframe.height = height?.toString() || defaultHeight;
+                videoIframe.width = width?.toString() || defaultWidth;
                 videoIframe.src = url.href;
 
                 if (target.id) {
