@@ -27,16 +27,37 @@
         display: noop,
         get: noopReturnNull
     };
+    let targeting = {};
+    function setTargeting (key, value) {
+        const val = Array.isArray(value) ? value : [value];
+        targeting[key] = val;
+    }
+    function getTargeting (key) {
+        if (key in targeting) {
+            return targeting[key];
+        }
+        return [];
+    }
+    function getTargetingKeys () {
+        return Object.keys(targeting);
+    }
+    function clearTargeting (key) {
+        if (key) {
+            targeting[key] = [];
+        } else {
+            targeting = {};
+        }
+    }
     const pubadsTarget = {
         addEventListener: noopReturnThis,
         clearCategoryExclusions: noopReturnThis,
         clearTagForChildDirectedTreatment: noopReturnThis,
-        clearTargeting: noopReturnThis,
+        clearTargeting,
         definePassback: function () { return new Proxy(passbackTarget, noopReturnThisHandler); },
         defineOutOfPagePassback: function () { return new Proxy(passbackTarget, noopReturnThisHandler); },
         get: noopReturnNull,
         getAttributeKeys: noopReturnEmptyArray,
-        getTargetingKeys: noopReturnEmptyArray,
+        getTargetingKeys,
         getSlots: noopReturnEmptyArray,
         set: noopReturnThis,
         setCategoryExclusion: noopReturnThis,
@@ -47,7 +68,8 @@
         setRequestNonPersonalizedAds: noopReturnThis,
         setSafeFrameConfig: noopReturnThis,
         setTagForChildDirectedTreatment: noopReturnThis,
-        setTargeting: noopReturnThis,
+        setTargeting,
+        getTargeting,
         setVideoContent: noopReturnThis
     };
     const companionadsTarget = {
@@ -66,8 +88,8 @@
         getCategoryExclusions: noopReturnEmptyArray,
         getDomId: noopReturnEmptyString,
         getSlotElementId: noopReturnEmptyString,
-        getTargeting: noopReturnEmptyArray,
-        getTargetingKeys: noopReturnEmptyArray
+        getTargeting,
+        getTargetingKeys
     };
     const gptObj = {
         _loadStarted_: true,
