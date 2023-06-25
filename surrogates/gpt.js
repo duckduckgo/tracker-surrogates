@@ -27,7 +27,7 @@
         display: noop,
         get: noopReturnNull
     };
-    const targeting = {};
+    let targeting = {};
     function setTargeting (key, value) {
         const val = Array.isArray(value) ? value : [value];
         targeting[key] = val;
