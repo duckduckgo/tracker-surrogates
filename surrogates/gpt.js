@@ -45,7 +45,7 @@
         if (key) {
             targeting[key] = [];
         } else {
-            targeting = []
+            targeting = {};
         }
     }
     const pubadsTarget = {
