@@ -43,7 +43,7 @@
     }
     function clearTargeting (key) {
         if (key) {
-            targeting[key] = []
+            targeting[key] = [];
         } else {
             targeting = []
         }
