@@ -10,7 +10,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 
 The work incorporates open source code from third parties that was originally licensed as follows:
 
-Mozilla's source code at https://searchfox.org/mozilla-central/source/browser/extensions/webcompat/shims <br>
+Mozilla's source code at https://searchfox.org/mozilla-central/source/browser/extensions/webcompat/shims
+Mozilla Public License, v. 2.0. http://mozilla.org/MPL/2.0/.
+
+Ublock's source code at https://github.com/gorhill/uBlock/blob/master/src/web_accessible_resources/google-ima.js
 Mozilla Public License, v. 2.0. http://mozilla.org/MPL/2.0/.
 
 ## Apache License
