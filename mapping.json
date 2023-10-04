@@ -42,6 +42,9 @@
     "facebook.com": [
         { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
+    "npttech.com": [
+        { "regexRule": "npttech\\.com\\/advertising\\.js", "surrogate": "noop.js" }
+    ],
     "youtube.com": [
         { "regexRule": "youtube\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" },
         { "regexRule": "youtube\\.com\\/player_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
