@@ -35,6 +35,14 @@ Format of the `mapping.json` file:
 }
 ```
 
+⚠️**Warning**: Be careful when adding new surrogate scripts to the `mapping.json`
+              file. The block lists are regenerated using the version of
+              `mapping.json` pushed to main (not the version most recently
+              released). From there, redirection rules are automatically added,
+              sometimes even for requests that have specific exceptions. If the
+              surrogate script in question is not yet available on a given
+              platform, the corresponding requests might start being blocked!⚠️
+
 ## Contributing
 
 We don't take external contributions at this time, but please feel free to open issues.
