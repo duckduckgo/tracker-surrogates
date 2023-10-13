@@ -49,4 +49,23 @@
             datalayer.hide.end();
         } catch (error) {}
     }
+
+    /* This Source Code Form is subject to the terms of the Mozilla Public
+     * License, v. 2.0. If a copy of the MPL was not distributed with this
+     * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+    // gaplugin wrapper based on Mozilla's Google analytics shim:
+    // https://searchfox.org/mozilla-central/source/browser/extensions/webcompat/shims/google-analytics-and-tag-manager.js
+    if (!(window.gaplugins && window.gaplugins.Linker)) {
+        window.gaplugins = window.gaplugins || {};
+        window.gaplugins.Linker = class {
+            autoLink () {}
+
+            decorate (url) {
+                return url;
+            }
+
+            passthrough () {}
+        };
+    }
 })();
