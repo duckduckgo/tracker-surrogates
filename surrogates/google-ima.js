@@ -320,8 +320,9 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     }
 
     _dispatch(e) {
-      const listeners = this.listeners.get(e.type) || [];
-      for (const listener of Array.from(listeners)) {
+      let listeners = this.listeners.get(e.type);
+      listeners = listeners ? Array.from(listeners.values()) : [];
+      for (const listener of listeners) {
         try {
           listener(e);
         } catch (r) {
@@ -330,16 +331,16 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       }
     }
 
-    addEventListener(types, c) {
+    addEventListener(types, c, options, context) {
       if (!Array.isArray(types)) {
         types = [types];
       }
 
       for (const t of types) {
         if (!this.listeners.has(t)) {
-          this.listeners.set(t, new Set());
+          this.listeners.set(t, new Map());
         }
-        this.listeners.get(t).add(c);
+        this.listeners.get(t).set(c, c.bind(context || this));
       }
     }
 
@@ -623,7 +624,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getErrorCode() {
       return this.errorCode;
     }
-    getInnerError() {}
+    getInnerError() { return null; }
     getMessage() {
       return this.message;
     }
