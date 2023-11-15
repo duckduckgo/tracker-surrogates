@@ -447,13 +447,14 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
         for (const type of [
           AdEvent.Type.LOADED,
           AdEvent.Type.STARTED,
-          AdEvent.Type.CONTENT_RESUME_REQUESTED,
+          AdEvent.Type.CONTENT_PAUSE_REQUESTED,
           AdEvent.Type.AD_BUFFERING,
           AdEvent.Type.FIRST_QUARTILE,
           AdEvent.Type.MIDPOINT,
           AdEvent.Type.THIRD_QUARTILE,
           AdEvent.Type.COMPLETE,
           AdEvent.Type.ALL_ADS_COMPLETED,
+          AdEvent.Type.CONTENT_RESUME_REQUESTED,
         ]) {
           try {
             this._dispatch(new ima.AdEvent(type));
