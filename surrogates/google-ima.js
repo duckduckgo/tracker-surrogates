@@ -500,6 +500,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   class Ad {
     constructor() {
       this._pi = new AdPodInfo();
+      this.data = [1];
     }
     getAdId() {
       return "";
