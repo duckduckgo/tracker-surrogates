@@ -397,6 +397,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     constructor() {
       super();
       this.volume = 1;
+      this._enablePreloading = false;
     }
     collapse() {}
     configureAdsManager() {}
@@ -422,7 +423,11 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getVolume() {
       return this.volume;
     }
-    init(/* w, h, m, e */) {}
+    init(/* w, h, m, e */) {
+      if (this._enablePreloading) {
+        this._dispatch(new ima.AdEvent(AdEvent.Type.LOADED));
+      }
+    }
     isCustomClickTrackingUsed() {
       return false;
     }
@@ -726,7 +731,10 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     constructor(type) {
       this.type = type;
     }
-    getAdsManager() {
+    getAdsManager(c, settings) {
+      if (settings && settings.enablePreloading) {
+        manager._enablePreloading = true;
+      }
       return manager;
     }
     getUserRequestContext() {
