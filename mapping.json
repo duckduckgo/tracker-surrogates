@@ -22,7 +22,9 @@
     ],
     "googlesyndication.com": [
         { "regexRule": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
-        { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
+        { "regexRule": "googlesyndication\\.com\\/pagead\\/show_ads\\.js", "surrogate": "noop.js" },
+        { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
+        { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/.*\\/osd_listener\\.js", "surrogate": "noop.js" }
     ],
     "doubleclick.net": [
         { "regexRule": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
