@@ -3,6 +3,7 @@
         { "regexRule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js", "surrogate": "google-ima.js" }
     ],
     "amazon-adsystem.com": [
+        { "regexRule": "amazon-adsystem\\.com\\/aax2\\/apstag\\.js", "surrogate": "amzn_apstag.js" },
         { "regexRule": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js", "surrogate": "amzn_ads.js" }
     ],
     "chartbeat.com": [
