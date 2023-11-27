@@ -10,6 +10,9 @@
         { "regexRule": "chartbeat\\.com\\/chartbeat\\.js", "surrogate": "chartbeat.js" },
         { "regexRule": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
     ],
+    "criteo.net": [
+        { "regexRule": "criteo\\.net\\/js\\/ld\\/publishertag\\.js", "surrogate": "criteo.js" }
+    ],
     "doubleclick.net": [
         { "regexRule": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
         { "regexRule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
