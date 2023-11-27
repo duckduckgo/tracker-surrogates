@@ -471,6 +471,9 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   class AdsRenderingSettings {}
 
   class AdsRequest {
+    constructor() {
+      this.omidAccessModeRules = {};
+    }
     setAdWillAutoPlay() {}
     setAdWillPlayMuted() {}
     setContinuousPlayback() {}
