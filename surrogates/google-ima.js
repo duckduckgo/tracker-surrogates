@@ -500,6 +500,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   class Ad {
     constructor() {
       this._pi = new AdPodInfo();
@@ -650,22 +651,9 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   AdError.ErrorCode = {};
   AdError.Type = {};
 
-  const isEngadget = () => {
-    try {
-      for (const ctx of Object.values(window.vidible._getContexts())) {
-        const player = ctx.getPlayer();
-        if (!player) { continue; }
-        const div = player.div;
-        if (!div) { continue; }
-        if (div.innerHTML.includes("www.engadget.com")) {
-          return true;
-        }
-      }
-    } catch (_) {}
-    return false;
-  };
-
-  const currentAd = isEngadget() ? undefined : new Ad();
+  // TODO: Consider setting this to `new Ad()` when AdEvent.Type.LOADED fires
+  //       and clearing it again after AdEvent.Type.ALL_ADS_COMPLETED fires.
+  const currentAd = null;
 
   class AdEvent {
     constructor(type) {
