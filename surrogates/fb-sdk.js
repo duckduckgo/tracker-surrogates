@@ -113,14 +113,26 @@
         }
     });
 
+    // Instead of using fbAsyncInit, some websites create a list of FB API calls
+    // that should be made after init.
+    const bufferCalls = window.FB && window.FB.__buffer && window.FB.__buffer.calls;
+
     function init () {
         if (window.fbAsyncInit) {
             siteInit = window.fbAsyncInit;
             window.fbAsyncInit();
         }
+
+        if (bufferCalls) {
+            for (const [method, params] of bufferCalls) {
+                if (Object.prototype.hasOwnProperty.call(window.FB, method)) {
+                    window.FB[method].apply(window.FB, params);
+                }
+            }
+        }
     }
 
-    if (!window.FB) {
+    if (!window.FB || window.FB.__buffer) {
         window.FB = {
             api: function (url, cb) { cb(); },
             init: function (obj) {
