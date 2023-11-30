@@ -47,3 +47,12 @@ knownSurrogates.forEach(name => {
         process.exit(1);
     }
 });
+
+const sortedKeys = Object.keys(mapping).sort();
+if (sortedKeys.join() !== Object.keys(mapping).join()) {
+    console.error(
+        '🛑 Domain names in mapping file should be sorted alphabetically.\n',
+        `Expected order: ${sortedKeys.join(', ')}`
+    );
+    process.exit(1);
+}

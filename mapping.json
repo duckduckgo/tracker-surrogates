@@ -2,8 +2,23 @@
     "2mdn.net": [
         { "regexRule": "2mdn\\.net\\/instream\\/html5\\/ima3\\.js", "surrogate": "google-ima.js" }
     ],
-    "imasdk.googleapis.com": [
-        { "regexRule": "imasdk\\.googleapis\\.com\\/js\\/sdkloader\\/ima3\\.js", "surrogate": "google-ima.js" }
+    "amazon-adsystem.com": [
+        { "regexRule": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js", "surrogate": "amzn_ads.js" }
+    ],
+    "chartbeat.com": [
+        { "regexRule": "chartbeat\\.com\\/chartbeat\\.js", "surrogate": "chartbeat.js" },
+        { "regexRule": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
+    ],
+    "doubleclick.net": [
+        { "regexRule": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
+        { "regexRule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
+    ],
+    "facebook.com": [
+        { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+    ],
+    "facebook.net": [
+        { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
+        { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
     "google-analytics.com": [
         { "regexRule": "google-analytics\\.com\\/ga\\.js", "surrogate": "ga.js" },
@@ -13,6 +28,10 @@
         { "regexRule": "google-analytics\\.com\\/cx\\/api\\.js", "surrogate": "api.js" },
         { "regexRule": "google-analytics\\.com\\/gtm\\/js", "surrogate": "gtm.js" }
     ],
+    "googlesyndication.com": [
+        { "regexRule": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
+        { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
+    ],
     "googletagmanager.com": [
         { "regexRule": "googletagmanager\\.com\\/gtm\\.js", "surrogate": "gtm.js" }
     ],
@@ -20,43 +39,24 @@
         { "regexRule": "googletagservices\\.com\\/gpt\\.js", "surrogate": "gpt.js" },
         { "regexRule": "googletagservices\\.com\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
-    "googlesyndication.com": [
-        { "regexRule": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
-        { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
-    ],
-    "doubleclick.net": [
-        { "regexRule": "doubleclick\\.net\\/instream\\/ad_status\\.js", "surrogate": "ad_status.js" },
-        { "regexRule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
-    ],
-    "scorecardresearch.com": [
-        { "regexRule": "scorecardresearch\\.com\\/beacon\\.js", "surrogate": "beacon.js" }
-    ],
-    "outbrain.com": [
-        { "regexRule": "outbrain\\.com\\/outbrain\\.js", "surrogate": "outbrain.js" }
-    ],
-    "amazon-adsystem.com": [
-        { "regexRule": "amazon-adsystem\\.com\\/aax2\\/amzn_ads\\.js", "surrogate": "amzn_ads.js" }
-    ],
-    "chartbeat.com": [
-        { "regexRule": "chartbeat\\.com\\/chartbeat\\.js", "surrogate": "chartbeat.js" },
-        { "regexRule": "chartbeat\\.com\\/js\\/chartbeat\\.js", "surrogate": "chartbeat.js" }
-    ],
-    "facebook.net": [
-        { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
-        { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
-    ],
-    "facebook.com": [
-        { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+    "imasdk.googleapis.com": [
+        { "regexRule": "imasdk\\.googleapis\\.com\\/js\\/sdkloader\\/ima3\\.js", "surrogate": "google-ima.js" }
     ],
     "npttech.com": [
         { "regexRule": "npttech\\.com\\/advertising\\.js", "surrogate": "noop.js" }
     ],
-    "youtube.com": [
-        { "regexRule": "youtube\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" },
-        { "regexRule": "youtube\\.com\\/player_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
+    "outbrain.com": [
+        { "regexRule": "outbrain\\.com\\/outbrain\\.js", "surrogate": "outbrain.js" }
+    ],
+    "scorecardresearch.com": [
+        { "regexRule": "scorecardresearch\\.com\\/beacon\\.js", "surrogate": "beacon.js" }
     ],
     "youtube-nocookie.com": [
         { "regexRule": "youtube-nocookie\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" },
         { "regexRule": "youtube-nocookie\\.com\\/player_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
+    ],
+    "youtube.com": [
+        { "regexRule": "youtube\\.com\\/iframe_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" },
+        { "regexRule": "youtube\\.com\\/player_api", "surrogate": "youtube-iframe-api.js", "action": "block-ctl-yt" }
     ]
 }
