@@ -53,6 +53,9 @@
     "imasdk.googleapis.com": [
         { "regexRule": "imasdk\\.googleapis\\.com\\/js\\/sdkloader\\/ima3\\.js", "surrogate": "google-ima.js" }
     ],
+    "imrworldwide.com": [
+        { "regexRule": "imrworldwide\\.com\\/v60\\.js", "surrogate": "nielsen.js" }
+    ],
     "npttech.com": [
         { "regexRule": "npttech\\.com\\/advertising\\.js", "surrogate": "noop.js" }
     ],
