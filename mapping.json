@@ -20,6 +20,9 @@
         { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
         { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
     ],
+    "gemius.pl": [
+        { "regexRule": "gemius\\.pl\\/gplayer\\.js", "surrogate": "noop.js" }
+    ],
     "google-analytics.com": [
         { "regexRule": "google-analytics\\.com\\/ga\\.js", "surrogate": "ga.js" },
         { "regexRule": "google-analytics\\.com\\/analytics\\.js", "surrogate": "analytics.js" },
@@ -30,6 +33,7 @@
     ],
     "googlesyndication.com": [
         { "regexRule": "googlesyndication\\.com\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" },
+        { "regexRule": "googlesyndication\\.com\\/pagead\\/show_ads\\.js", "surrogate": "noop.js" },
         { "regexRule": "googlesyndication\\.com\\/pagead\\/js\\/adsbygoogle\\.js", "surrogate": "adsbygoogle.js" }
     ],
     "googletagmanager.com": [
@@ -38,6 +42,9 @@
     "googletagservices.com": [
         { "regexRule": "googletagservices\\.com\\/gpt\\.js", "surrogate": "gpt.js" },
         { "regexRule": "googletagservices\\.com\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
+    ],
+    "htlbid.com": [
+        { "regexRule": "htlbid\\.com\\/v3\\/.*\\/htlbid\\.js", "surrogate": "noop.js" }
     ],
     "imasdk.googleapis.com": [
         { "regexRule": "imasdk\\.googleapis\\.com\\/js\\/sdkloader\\/ima3\\.js", "surrogate": "google-ima.js" }
