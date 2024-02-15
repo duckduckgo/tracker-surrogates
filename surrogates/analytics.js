@@ -1,3 +1,9 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+// Partially based on https://searchfox.org/mozilla-central/source/browser/extensions/webcompat/shims/google-analytics-and-tag-manager.js
+
 (() => {
     'use strict';
     const noop = () => {};
@@ -8,17 +14,7 @@
     };
     const gaPointer = window.GoogleAnalyticsObject = (window.GoogleAnalyticsObject === undefined) ? 'ga' : window.GoogleAnalyticsObject;
     const datalayer = window.dataLayer;
-    // execute callback if exists, see https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#hitCallback
-    const ga = function () {
-        const params = Array.from(arguments);
-        params.forEach((param) => {
-            if (param instanceof Object && typeof param.hitCallback === 'function') {
-                try {
-                    param.hitCallback();
-                } catch (error) {}
-            }
-        });
-    };
+
     const Tracker = new Proxy({}, {
         get (target, prop) {
             if (prop === 'get') {
@@ -36,6 +32,33 @@
             return noop;
         }
     });
+
+    let callQueue = null;
+    if (window[gaPointer] && Array.isArray(window[gaPointer].q)) {
+        callQueue = window[gaPointer].q;
+    }
+
+    // Execute callback if exists.
+    // Note: There are other ways of using the API that aren't handled here yet.
+    const ga = function () {
+        const params = Array.from(arguments);
+
+        if (params.length === 1 && typeof params[0] === 'function') {
+            try {
+                params[0](Tracker);
+            } catch (error) {}
+            return undefined;
+        }
+
+        // See https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#hitCallback
+        params.forEach((param) => {
+            if (param instanceof Object && typeof param.hitCallback === 'function') {
+                try {
+                    param.hitCallback();
+                } catch (error) {}
+            }
+        });
+    };
     ga.answer = 42;
     ga.loaded = true;
     ga.create = function () { return new Proxy({}, noopHandler); };
@@ -50,12 +73,6 @@
         } catch (error) {}
     }
 
-    /* This Source Code Form is subject to the terms of the Mozilla Public
-     * License, v. 2.0. If a copy of the MPL was not distributed with this
-     * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-    // gaplugin wrapper based on Mozilla's Google analytics shim:
-    // https://searchfox.org/mozilla-central/source/browser/extensions/webcompat/shims/google-analytics-and-tag-manager.js
     if (!(window.gaplugins && window.gaplugins.Linker)) {
         window.gaplugins = window.gaplugins || {};
         window.gaplugins.Linker = class {
@@ -67,5 +84,13 @@
 
             passthrough () {}
         };
+    }
+
+    if (callQueue) {
+        for (const args of callQueue) {
+            try {
+                ga(...args);
+            } catch (e) { }
+        }
     }
 })();
