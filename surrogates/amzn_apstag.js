@@ -57,7 +57,22 @@ if (!(window.apstag && window.apstag._getSlotIdToNameMapping)) {
 
   window.apstagLOADED = true;
 
+  const isIterable =
+    a => Array.isArray(a) ||
+         (typeof Symbol !== "undefined" && Symbol.iterator && a[Symbol.iterator]) ||
+         a.toString() === "[object Arguments]";
+
   _Q.push = function(prefix, args) {
+    // TODO: Check if this code path ever _isn't_ hit, seems like a bug in the
+    //       original shim implementation?
+    if (isIterable(prefix) && typeof args === "undefined") {
+      [prefix, ...args] = Array.from(prefix);
+    }
+
+    if (args && args.length === 1 && isIterable(args[0])) {
+      args = Array.from(args[0]);
+    }
+
     try {
       switch (prefix) {
         case "f":
