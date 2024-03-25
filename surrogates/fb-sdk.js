@@ -1,7 +1,8 @@
 (() => {
     'use strict';
     const facebookEntity = 'Facebook, Inc.';
-    const originalFBURL = document.currentScript.src;
+    const DEFAULT_FB_SDK_URL = 'https://connect.facebook.net/en_US/sdk.js?XFBML=false';
+    const originalFBURL = document?.currentScript?.src || DEFAULT_FB_SDK_URL;
     let siteInit = function () {};
     let fbIsEnabled = false;
     let initData = {};
