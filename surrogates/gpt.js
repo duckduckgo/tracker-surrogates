@@ -14,20 +14,20 @@
 
     let targeting = Object.create(null);
 
-    function setTargeting(key, value) {
+    function setTargeting (key, value) {
         const val = Array.isArray(value) ? value : [value];
         targeting[key] = val;
     }
 
-    function getTargeting(key) {
+    function getTargeting (key) {
         return key in targeting ? targeting[key] : [];
     }
 
-    function getTargetingKeys() {
+    function getTargetingKeys () {
         return Object.keys(targeting);
     }
 
-    function clearTargeting(key) {
+    function clearTargeting (key) {
         if (key) {
             targeting[key] = [];
         } else {
@@ -127,14 +127,11 @@
             try {
                 arg();
             } catch (error) {
-                // Silently catch errors
             }
         }
         return 1;
     };
-
     window.googletag = gptObj;
-
     while (commandQueue.length > 0) {
         gptObj.cmd.push(commandQueue.shift());
     }
