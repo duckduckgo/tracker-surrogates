@@ -18,11 +18,11 @@
         { "regexRule": "doubleclick\\.net\\/tag\\/js\\/gpt\\.js", "surrogate": "gpt.js" }
     ],
     "facebook.com": [
-        { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+        { "regexRule": "facebook\\.com\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "noop.js" }
     ],
     "facebook.net": [
-        { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" },
-        { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "fb-sdk.js", "action": "block-ctl-fb" }
+        { "regexRule": "facebook\\.net\\/.*\\/all\\.js", "surrogate": "noop.js" },
+        { "regexRule": "facebook\\.net\\/[a-z_A-Z]+\\/sdk\\.js", "surrogate": "noop.js" }
     ],
     "gemius.pl": [
         { "regexRule": "gemius\\.pl\\/gplayer\\.js", "surrogate": "noop.js" }
