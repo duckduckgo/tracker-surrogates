@@ -1,64 +1,53 @@
 (() => {
     'use strict';
+
     const noop = () => {};
-    const noopReturnNull = () => { return null; };
-    const noopReturnEmptyArray = () => { return []; };
-    const noopReturnEmptyString = () => { return ''; };
-    const noopReturnThis = function () {
-        return this;
-    };
-    const noopHandler = {
-        get: function (target, prop, receiver) {
-            if (typeof target[prop] !== 'undefined') {
-                return Reflect.get(...arguments);
-            }
-            return noop;
-        }
-    };
-    const noopReturnThisHandler = {
-        get: function (target, prop, receiver) {
-            if (typeof target[prop] !== 'undefined') {
-                return Reflect.get(...arguments);
-            }
-            return noopReturnThis;
-        }
-    };
-    const passbackTarget = {
+    const noopReturnNull = () => null;
+    const noopReturnEmptyArray = () => [];
+    const noopReturnEmptyString = () => '';
+    const noopReturnThis = function () { return this; };
+
+    const passbackTarget = Object.assign(Object.create(null), {
         display: noop,
         get: noopReturnNull
-    };
-    let targeting = {};
+    });
+
+    let targeting = Object.create(null);
+
     function setTargeting (key, value) {
         const val = Array.isArray(value) ? value : [value];
         targeting[key] = val;
     }
+
     function getTargeting (key) {
-        if (key in targeting) {
-            return targeting[key];
-        }
-        return [];
+        return key in targeting ? targeting[key] : [];
     }
+
     function getTargetingKeys () {
         return Object.keys(targeting);
     }
+
     function clearTargeting (key) {
         if (key) {
             targeting[key] = [];
         } else {
-            targeting = {};
+            targeting = Object.create(null);
         }
     }
-    const pubadsTarget = {
+
+    const pubadsProto = {};
+    const pubadsTarget = Object.assign(Object.create(pubadsProto), {
         addEventListener: noopReturnThis,
         clearCategoryExclusions: noopReturnThis,
         clearTagForChildDirectedTreatment: noopReturnThis,
         clearTargeting,
-        definePassback: function () { return new Proxy(passbackTarget, noopReturnThisHandler); },
-        defineOutOfPagePassback: function () { return new Proxy(passbackTarget, noopReturnThisHandler); },
+        definePassback: () => passbackTarget,
+        defineOutOfPagePassback: () => passbackTarget,
         get: noopReturnNull,
         getAttributeKeys: noopReturnEmptyArray,
         getTargetingKeys,
         getSlots: noopReturnEmptyArray,
+        prebidders: [],
         set: noopReturnThis,
         setCategoryExclusion: noopReturnThis,
         setCookieOptions: noopReturnThis,
@@ -70,38 +59,58 @@
         setTagForChildDirectedTreatment: noopReturnThis,
         setTargeting,
         getTargeting,
-        setVideoContent: noopReturnThis
-    };
-    const companionadsTarget = {
+        setVideoContent: noopReturnThis,
+        enableSingleRequest: noopReturnThis,
+        collapseEmptyDivs: noopReturnThis,
+        refresh: noopReturnThis,
+        disableInitialLoad: noopReturnThis,
+        enableAsyncRendering: noopReturnThis,
+        enableLazyLoad: noopReturnThis,
+        updateCorrelator: noopReturnThis
+    });
+
+    const companionadsTarget = Object.assign(Object.create(null), {
         addEventListener: noopReturnThis
-    };
-    const sizeMappingTarget = {
+    });
+
+    const sizeMappingTarget = Object.assign(Object.create(null), {
+        addSize: noopReturnThis,
         build: noopReturnNull
-    };
-    const contentTarget = {
+    });
+
+    const contentTarget = Object.assign(Object.create(null), {
         addEventListener: noopReturnThis
-    };
-    const slotTarget = {
+    });
+
+    const slotTarget = Object.assign(Object.create(null), {
+        addService: noopReturnThis,
+        defineSizeMapping: noopReturnThis,
         get: noopReturnNull,
-        getAdUnitPath: noopReturnEmptyArray,
+        getAdUnitPath: noopReturnEmptyString,
         getAttributeKeys: noopReturnEmptyArray,
         getCategoryExclusions: noopReturnEmptyArray,
         getDomId: noopReturnEmptyString,
         getSlotElementId: noopReturnEmptyString,
         getTargeting,
-        getTargetingKeys
-    };
-    const gptObj = {
+        getTargetingKeys,
+        setTargeting,
+        clearTargeting,
+        setCollapseEmptyDiv: noopReturnThis,
+        setSafeFrameConfig: noopReturnThis,
+        setForceSafeFrame: noopReturnThis
+    });
+
+    const gptObj = Object.assign(Object.create(null), {
         _loadStarted_: true,
         apiReady: true,
         pubadsReady: true,
         cmd: [],
-        pubads: function () { return new Proxy(pubadsTarget, noopHandler); },
-        companionAds: function () { return new Proxy(companionadsTarget, noopHandler); },
-        sizeMapping: function () { return new Proxy(sizeMappingTarget, noopReturnThisHandler); },
-        content: function () { return new Proxy(contentTarget, noopHandler); },
-        defineSlot: function () { return new Proxy(slotTarget, noopReturnThisHandler); },
-        defineOutOfPageSlot: function () { return new Proxy(slotTarget, noopReturnThisHandler); },
+        pubads: () => pubadsTarget,
+        companionAds: () => companionadsTarget,
+        sizeMapping: () => sizeMappingTarget,
+        content: () => contentTarget,
+        defineSlot: () => slotTarget,
+        defineOutOfPageSlot: () => slotTarget,
         defineUnit: noopReturnNull,
         destroySlots: noop,
         disablePublisherConsole: noop,
@@ -109,8 +118,10 @@
         enableServices: noop,
         getVersion: noopReturnEmptyString,
         setAdIframeTitle: noop
-    };
+    });
+
     const commandQueue = (window.googletag && window.googletag.cmd.length) ? window.googletag.cmd : [];
+
     gptObj.cmd.push = function (arg) {
         if (typeof arg === 'function') {
             try {

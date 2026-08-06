@@ -16,196 +16,42 @@
  * Many sites use ima3.js for ad bidding and placement, often in conjunction
  * with Google Publisher Tags, Prebid.js and/or other scripts. This shim
  * provides a stubbed-out version of the API which helps work around related
- * site breakage, such as black bxoes where videos ought to be placed.
+ * site breakage, such as black boxes where videos ought to be placed.
  */
 
-if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
+if (!window.google?.ima?.VERSION) {
   const VERSION = "3.517.2";
 
-  const CheckCanAutoplay = (function() {
+  const CheckCanAutoplay = (function () {
     // Sourced from: https://searchfox.org/mozilla-central/source/dom/media/gtest/negative_duration.mp4
     const TEST_VIDEO = new Blob(
       [
         new Uint32Array([
-          469762048,
-          1887007846,
-          1752392036,
-          0,
-          913273705,
-          1717987696,
-          828601953,
-          -1878917120,
-          1987014509,
-          1811939328,
-          1684567661,
-          0,
-          0,
-          0,
-          -402456576,
-          0,
-          256,
-          1,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          64,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          33554432,
-          -201261056,
-          1801548404,
-          1744830464,
-          1684564852,
-          251658241,
-          0,
-          0,
-          0,
-          0,
-          16777216,
-          0,
-          -1,
-          -1,
-          0,
-          0,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          256,
-          0,
-          0,
-          0,
-          64,
-          5,
-          53250,
-          -2080309248,
-          1634296941,
-          738197504,
-          1684563053,
-          1,
-          0,
-          0,
-          0,
-          0,
-          -2137614336,
-          -1,
-          -1,
-          50261,
-          754974720,
-          1919706216,
-          0,
-          0,
-          1701079414,
-          0,
-          0,
-          0,
-          1701079382,
-          1851869295,
-          1919249508,
-          16777216,
-          1852402979,
-          102,
-          1752004116,
-          100,
-          1,
-          0,
-          0,
-          1852400676,
-          102,
-          1701995548,
-          102,
-          0,
-          1,
-          1819440396,
-          32,
-          1,
-          1651799011,
-          108,
-          1937011607,
-          100,
-          0,
-          1,
-          1668702599,
-          49,
-          0,
-          1,
-          0,
-          0,
-          0,
-          33555712,
-          4718800,
-          4718592,
-          0,
-          65536,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          16776984,
-          1630601216,
-          21193590,
-          -14745500,
-          1729626337,
-          -1407254428,
-          89161945,
-          1049019,
-          9453056,
-          -251611125,
-          27269507,
-          -379058688,
-          -1329024392,
-          268435456,
-          1937011827,
-          0,
-          0,
-          268435456,
-          1668510835,
-          0,
-          0,
-          335544320,
-          2054386803,
-          0,
-          0,
-          0,
-          268435456,
-          1868788851,
-          0,
-          0,
-          671088640,
-          2019915373,
-          536870912,
-          2019914356,
-          0,
-          16777216,
-          16777216,
-          0,
-          0,
-          0,
+          469762048, 1887007846, 1752392036, 0, 913273705, 1717987696,
+          828601953, -1878917120, 1987014509, 1811939328, 1684567661, 0, 0, 0,
+          -402456576, 0, 256, 1, 0, 0, 256, 0, 0, 0, 256, 0, 0, 0, 64, 0, 0, 0,
+          0, 0, 0, 33554432, -201261056, 1801548404, 1744830464, 1684564852,
+          251658241, 0, 0, 0, 0, 16777216, 0, -1, -1, 0, 0, 0, 0, 256, 0, 0, 0,
+          256, 0, 0, 0, 64, 5, 53250, -2080309248, 1634296941, 738197504,
+          1684563053, 1, 0, 0, 0, 0, -2137614336, -1, -1, 50261, 754974720,
+          1919706216, 0, 0, 1701079414, 0, 0, 0, 1701079382, 1851869295,
+          1919249508, 16777216, 1852402979, 102, 1752004116, 100, 1, 0, 0,
+          1852400676, 102, 1701995548, 102, 0, 1, 1819440396, 32, 1, 1651799011,
+          108, 1937011607, 100, 0, 1, 1668702599, 49, 0, 1, 0, 0, 0, 33555712,
+          4718800, 4718592, 0, 65536, 0, 0, 0, 0, 0, 0, 0, 0, 16776984,
+          1630601216, 21193590, -14745500, 1729626337, -1407254428, 89161945,
+          1049019, 9453056, -251611125, 27269507, -379058688, -1329024392,
+          268435456, 1937011827, 0, 0, 268435456, 1668510835, 0, 0, 335544320,
+          2054386803, 0, 0, 0, 268435456, 1868788851, 0, 0, 671088640,
+          2019915373, 536870912, 2019914356, 0, 16777216, 16777216, 0, 0, 0,
         ]),
       ],
       { type: "video/mp4" }
     );
 
-    let testVideo;
+    let testVideo = undefined;
 
-    return function() {
+    return function () {
       if (!testVideo) {
         testVideo = document.createElement("video");
         testVideo.style =
@@ -219,90 +65,76 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     };
   })();
 
-  const ima = {};
+  let ima = {};
 
   class AdDisplayContainer {
-    constructor(containerElement) {
-      const divElement = document.createElement("div");
-      divElement.style.setProperty("display", "none", "important");
-      divElement.style.setProperty("visibility", "collapse", "important");
-      containerElement.appendChild(divElement);
-    }
     destroy() {}
     initialize() {}
   }
 
   class ImaSdkSettings {
-    constructor() {
-      this.c = true;
-      this.f = {};
-      this.i = false;
-      this.l = "";
-      this.p = "";
-      this.r = 0;
-      this.t = "";
-      this.v = "";
-    }
+    #c = true;
+    #f = {};
+    #i = false;
+    #l = "";
+    #p = "";
+    #r = 0;
+    #t = "";
+    #v = "";
     getCompanionBackfill() {}
     getDisableCustomPlaybackForIOS10Plus() {
-      return this.i;
+      return this.#i;
     }
     getFeatureFlags() {
-      return this.f;
+      return this.#f;
     }
     getLocale() {
-      return this.l;
+      return this.#l;
     }
     getNumRedirects() {
-      return this.r;
+      return this.#r;
     }
     getPlayerType() {
-      return this.t;
+      return this.#t;
     }
     getPlayerVersion() {
-      return this.v;
+      return this.#v;
     }
     getPpid() {
-      return this.p;
+      return this.#p;
     }
     isCookiesEnabled() {
-      return this.c;
+      return this.#c;
     }
     setAutoPlayAdBreaks() {}
     setCompanionBackfill() {}
     setCookiesEnabled(c) {
-      this.c = !!c;
+      this.#c = !!c;
     }
     setDisableCustomPlaybackForIOS10Plus(i) {
-      this.i = !!i;
+      this.#i = !!i;
     }
     setFeatureFlags(f) {
-      this.f = f;
+      this.#f = f;
     }
     setLocale(l) {
-      this.l = l;
+      this.#l = l;
     }
     setNumRedirects(r) {
-      this.r = r;
+      this.#r = r;
     }
     setPlayerType(t) {
-      this.t = t;
+      this.#t = t;
     }
     setPlayerVersion(v) {
-      this.v = v;
+      this.#v = v;
     }
     setPpid(p) {
-      this.p = p;
+      this.#p = p;
     }
-    setSessionId(/* s */) {}
-    setVpaidAllowed(/* a */) {}
-    setVpaidMode(/* m */) {}
-
-    // https://github.com/uBlockOrigin/uBlock-issues/issues/2265#issuecomment-1637094149
-    getDisableFlashAds() {
-    }
-    setDisableFlashAds() {
-    }
+    setSessionId(_s) {}
+    setVpaidAllowed(_a) {}
+    setVpaidMode(_m) {}
   }
   ImaSdkSettings.CompanionBackfillMode = {
     ALWAYS: "always",
@@ -315,14 +147,11 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   };
 
   class EventHandler {
-    constructor() {
-      this.listeners = new Map();
-    }
+    #listeners = new Map();
 
     _dispatch(e) {
-      let listeners = this.listeners.get(e.type);
-      listeners = listeners ? Array.from(listeners.values()) : [];
-      for (const listener of listeners) {
+      const listeners = this.#listeners.get(e.type) || [];
+      for (const listener of Array.from(listeners)) {
         try {
           listener(e);
         } catch (r) {
@@ -331,47 +160,29 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       }
     }
 
-    addEventListener(types, c, options, context) {
-      if (!Array.isArray(types)) {
-        types = [types];
+    addEventListener(t, c) {
+      if (!this.#listeners.has(t)) {
+        this.#listeners.set(t, new Set());
       }
-
-      for (const t of types) {
-        if (!this.listeners.has(t)) {
-          this.listeners.set(t, new Map());
-        }
-        this.listeners.get(t).set(c, c.bind(context || this));
-      }
+      this.#listeners.get(t).add(c);
     }
 
-    removeEventListener(types, c) {
-      if (!Array.isArray(types)) {
-        types = [types];
-      }
-
-      for (const t of types) {
-        const typeSet = this.listeners.get(t);
-        if (typeSet) {
-          typeSet.delete(c);
-        }
-      }
+    removeEventListener(t, c) {
+      this.#listeners.get(t)?.delete(c);
     }
   }
 
   class AdsLoader extends EventHandler {
-    constructor() {
-      super();
-      this.settings = new ImaSdkSettings();
-    }
+    #settings = new ImaSdkSettings();
     contentComplete() {}
     destroy() {}
     getSettings() {
-      return this.settings;
+      return this.#settings;
     }
     getVersion() {
       return VERSION;
     }
-    requestAds(/* r, c */) {
+    requestAds(_r, _c) {
       // If autoplay is disabled and the page is trying to autoplay a tracking
       // ad, then IMA fails with an error, and the page is expected to request
       // ads again later when the user clicks to play.
@@ -394,11 +205,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   }
 
   class AdsManager extends EventHandler {
-    constructor() {
-      super();
-      this.volume = 1;
-      this._enablePreloading = false;
-    }
+    #volume = 1;
     collapse() {}
     configureAdsManager() {}
     destroy() {}
@@ -421,13 +228,9 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return 0;
     }
     getVolume() {
-      return this.volume;
+      return this.#volume;
     }
-    init(/* w, h, m, e */) {
-      if (this._enablePreloading) {
-        this._dispatch(new ima.AdEvent(AdEvent.Type.LOADED));
-      }
-    }
+    init(_w, _h, _m, _e) {}
     isCustomClickTrackingUsed() {
       return false;
     }
@@ -436,10 +239,10 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     }
     pause() {}
     requestNextAdBreak() {}
-    resize(/* w, h, m */) {}
+    resize(_w, _h, _m) {}
     resume() {}
     setVolume(v) {
-      this.volume = v;
+      this.#volume = v;
     }
     skip() {}
     start() {
@@ -447,14 +250,13 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
         for (const type of [
           AdEvent.Type.LOADED,
           AdEvent.Type.STARTED,
-          AdEvent.Type.CONTENT_PAUSE_REQUESTED,
+          AdEvent.Type.CONTENT_RESUME_REQUESTED,
           AdEvent.Type.AD_BUFFERING,
           AdEvent.Type.FIRST_QUARTILE,
           AdEvent.Type.MIDPOINT,
           AdEvent.Type.THIRD_QUARTILE,
           AdEvent.Type.COMPLETE,
           AdEvent.Type.ALL_ADS_COMPLETED,
-          AdEvent.Type.CONTENT_RESUME_REQUESTED,
         ]) {
           try {
             this._dispatch(new ima.AdEvent(type));
@@ -465,15 +267,12 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       });
     }
     stop() {}
-    updateAdsRenderingSettings(/* s */) {}
+    updateAdsRenderingSettings(_s) {}
   }
 
   class AdsRenderingSettings {}
 
   class AdsRequest {
-    constructor() {
-      this.omidAccessModeRules = {};
-    }
     setAdWillAutoPlay() {}
     setAdWillPlayMuted() {}
     setContinuousPlayback() {}
@@ -500,11 +299,8 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
   class Ad {
-    constructor() {
-      this._pi = new AdPodInfo();
-    }
+    _pi = new AdPodInfo();
     getAdId() {
       return "";
     }
@@ -572,7 +368,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       return "unknown";
     }
     getUniversalAdIds() {
-      return [new UniversalAdIdInfo()];
+      return [""];
     }
     getUniversalAdIdValue() {
       return "unknown";
@@ -625,35 +421,48 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   }
 
   class AdError {
+    #errorCode = -1;
+    #message = "";
+    #type = "";
+    #vastErrorCode = -1;
     constructor(type, code, vast, message) {
-      this.errorCode = code;
-      this.message = message;
-      this.type = type;
-      this.vastErrorCode = vast;
+      this.#errorCode = code;
+      this.#message = message;
+      this.#type = type;
+      this.#vastErrorCode = vast;
     }
     getErrorCode() {
-      return this.errorCode;
+      return this.#errorCode;
     }
-    getInnerError() { return null; }
+    getInnerError() {}
     getMessage() {
-      return this.message;
+      return this.#message;
     }
     getType() {
-      return this.type;
+      return this.#type;
     }
     getVastErrorCode() {
-      return this.vastErrorCode;
+      return this.#vastErrorCode;
     }
     toString() {
-      return `AdError ${this.errorCode}: ${this.message}`;
+      return `AdError ${this.#errorCode}: ${this.#message}`;
     }
   }
   AdError.ErrorCode = {};
   AdError.Type = {};
 
-  // TODO: Consider setting this to `new Ad()` when AdEvent.Type.LOADED fires
-  //       and clearing it again after AdEvent.Type.ALL_ADS_COMPLETED fires.
-  const currentAd = null;
+  const isEngadget = () => {
+    try {
+      for (const ctx of Object.values(window.vidible._getContexts())) {
+        if (ctx.getPlayer()?.div?.innerHTML.includes("www.engadget.com")) {
+          return true;
+        }
+      }
+    } catch (_) {}
+    return false;
+  };
+
+  const currentAd = isEngadget() ? undefined : new Ad();
 
   class AdEvent {
     constructor(type) {
@@ -702,12 +511,13 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
   };
 
   class AdErrorEvent {
+    type = "adError";
+    #error = "";
     constructor(error) {
-      this.type = "adError";
-      this.error = error;
+      this.#error = error;
     }
     getError() {
-      return this.error;
+      return this.#error;
     }
     getUserRequestContext() {
       return {};
@@ -723,10 +533,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     constructor(type) {
       this.type = type;
     }
-    getAdsManager(c, settings) {
-      if (settings && settings.enablePreloading) {
-        manager._enablePreloading = true;
-      }
+    getAdsManager() {
       return manager;
     }
     getUserRequestContext() {
@@ -772,7 +579,7 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
     getAdIdRegistry() {
       return "";
     }
-    getAdIdValue() {
+    getAdIsValue() {
       return "";
     }
   }
@@ -799,12 +606,6 @@ if (!window.google || !window.google.ima || !window.google.ima.VERSION) {
       DOMAIN: "domain",
       FULL: "full",
       LIMITED: "limited",
-    },
-    OmidVerificationVendor: {
-      1: "OTHER",
-      2: "GOOGLE",
-      GOOGLE: 2,
-      OTHER: 1
     },
     settings: new ImaSdkSettings(),
     UiElements: {
